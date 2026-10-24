@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Venn</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#0e0d12; --panel:#17151d; --ink:#f3efe6; --muted:#9a94a6; --accent:#ff5a36; --ok:#5ad19a; --line:#2a2633; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:Inter,system-ui,sans-serif; }
+  main { max-width:960px; margin:0 auto; padding:40px 16px 80px; }
+  h1 { font-family:"Space Grotesk"; font-size:clamp(32px,6vw,56px); line-height:1; margin:0 0 8px; letter-spacing:-.02em; }
+  h1 span { color:var(--accent); }
+  .tag { color:var(--muted); margin:0 0 32px; font-size:18px; }
+  form { display:grid; grid-template-columns:2fr 1fr; gap:12px; background:var(--panel); padding:20px; border-radius:14px; border:1px solid var(--line); }
+  form textarea, form button { grid-column:1/-1; }
+  input, textarea { background:#0e0d12; color:var(--ink); border:1px solid var(--line); border-radius:10px; padding:12px; font:inherit; }
+  button { background:var(--accent); color:#120c0a; border:0; border-radius:10px; padding:14px; font:600 16px "Space Grotesk"; cursor:pointer; }
+  button:disabled { opacity:.5; cursor:wait; }
+  .examples { margin:12px 0 0; color:var(--muted); font-size:14px; }
+  .examples a { color:var(--ink); cursor:pointer; text-decoration:underline dotted; margin-right:12px; }
+  #log { margin:24px 0; font:13px ui-monospace,monospace; color:var(--muted); }
+  #log div::before { content:"→ "; color:var(--accent); }
+  .summary { font-size:18px; line-height:1.5; border-left:3px solid var(--accent); padding-left:16px; margin:24px 0; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:20px; margin:16px 0; }
+  .card h3 { font-family:"Space Grotesk"; font-size:24px; margin:0 0 4px; }
+  .meta { color:var(--muted); font-size:14px; margin-bottom:12px; }
+  .pill { display:inline-block; padding:2px 10px; border-radius:99px; font-size:12px; font-weight:600; text-transform:uppercase; margin-left:8px; }
+  .high { background:var(--ok); color:#06210f; } .medium { background:#f2c94c; color:#2a1f00; } .low { background:var(--line); color:var(--muted); }
+  .route { color:var(--ok); font-size:14px; margin:8px 0; }
+  details { margin-top:12px; } summary { cursor:pointer; color:var(--accent); }
+  pre { white-space:pre-wrap; background:#0e0d12; padding:12px; border-radius:10px; font:14px/1.5 Inter,sans-serif; }
+  @media (max-width:600px){ form{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<main>
+  <h1>Ven<span>n</span></h1>
+  <p class="tag">Find the overlap between your crowd and the next band they'll love.</p>
+
+  <form id="f">
+    <input id="venue" placeholder="Venue name (e.g. The Empty Bottle)" required />
+    <input id="city" placeholder="City" />
+    <textarea id="notes" rows="2" placeholder="Optional: constraints (e.g. need a Thursday in March, max guarantee $1,500)"></textarea>
+    <button id="go">Book my next great night</button>
+  </form>
+  <p class="examples">Try:
+    <a data-v="The Empty Bottle" data-c="Chicago">Empty Bottle, Chicago</a>
+    <a data-v="Mercury Lounge" data-c="New York">Mercury Lounge, NYC</a>
+    <a data-v="Mohawk" data-c="Austin">Mohawk, Austin</a>
+  </p>
+
+  <div id="log"></div>
+  <div id="out"></div>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const LABELS = {
+  get_venue_profile: "Reading the room's booking history",
+  resolve_artists: "Matching artists in Qloo's taste graph",
+  get_local_taste: "Reading the neighborhood's taste",
+  find_candidate_artists: "Finding artists this crowd will love",
+  check_regional_momentum: "Checking who's already touring your region",
+  find_routing_gaps: "Checking tour routing for open dates",
+  find_openers: "Pairing openers with overlapping fans",
+  find_copromo_partners: "Finding local co-promo partners",
+};
+
+document.querySelectorAll(".examples a").forEach((a) => a.onclick = () => {
+  $("venue").value = a.dataset.v; $("city").value = a.dataset.c;
+});
+
+$("f").onsubmit = async (e) => {
+  e.preventDefault();
+  $("go").disabled = true; $("log").innerHTML = ""; $("out").innerHTML = "";
+  const res = await fetch("/api/book", {
+    method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ venue: $("venue").value, city: $("city").value, notes: $("notes").value }),
+  });
+  const reader = res.body.getReader(); const dec = new TextDecoder(); let buf = "";
+  while (true) {
+    const { value, done } = await reader.read(); if (done) break;
+    buf += dec.decode(value, { stream: true });
+    const parts = buf.split("\n\n"); buf = parts.pop();
+    for (const p of parts) if (p.startsWith("data: ")) handle(JSON.parse(p.slice(6)));
+  }
+  $("go").disabled = false;
+};
+
+function handle(ev) {
+  if (ev.type === "tool") $("log").insertAdjacentHTML("beforeend", `<div>${esc(LABELS[ev.name] || ev.name)}</div>`);
+  if (ev.type === "error") $("out").innerHTML = `<p class="summary">Something went wrong: ${esc(ev.message)}</p>`;
+  if (ev.type === "plan") render(ev.plan);
+}
+
+function render(plan) {
+  let html = `<p class="summary">${esc(plan.venue_summary)}</p>`;
+  for (const r of plan.recommendations || []) {
+    html += `<div class="card">
+      <h3>${esc(r.headliner)}<span class="pill ${esc(r.confidence)}">${esc(r.confidence)}</span></h3>
+      <div class="meta">${r.opener ? "with " + esc(r.opener) : ""}${r.suggested_date ? " · " + esc(r.suggested_date) : ""}</div>
+      ${r.routing_note ? `<div class="route">${esc(r.routing_note)}</div>` : ""}
+      <p>${esc(r.why)}</p>
+      ${(r.copromo || []).length ? `<p class="meta">Co-promo: ${r.copromo.map(esc).join(" · ")}</p>` : ""}
+      <details><summary>Offer email</summary><pre>${esc(r.offer_email)}</pre></details>
+    </div>`;
+  }
+  $("out").innerHTML = html;
+}
+</script>
+</body>
+</html>
