@@ -36,6 +36,13 @@
   .card p { margin:8px 0; line-height:1.5; }
   details { margin-top:12px; } summary { cursor:pointer; color:var(--accent); }
   pre { white-space:pre-wrap; background:#0e0d12; padding:12px; border-radius:10px; font:14px/1.5 Inter,sans-serif; }
+  .overlap { display:flex; gap:16px; align-items:center; flex-wrap:wrap; margin:12px 0; }
+  .overlap svg { width:220px; height:124px; flex:none; }
+  .overlap svg text { font:600 10px Inter,sans-serif; fill:var(--ink); }
+  .overlap svg .sub { font-weight:400; fill:var(--muted); }
+  .chips { display:flex; flex-wrap:wrap; gap:6px; }
+  .chip { font-size:12px; padding:4px 10px; border-radius:99px; border:1px solid var(--line); color:var(--ink); background:#0e0d12; }
+  .chip.fan { border-color:var(--accent); color:var(--accent); }
   .hint { grid-column:1/-1; color:var(--muted); font-size:13px; margin:-4px 0 0; }
   #compareBtn { display:none; background:transparent; color:var(--accent); border:1px solid var(--accent); margin:8px 0 0; }
   .compare { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0; }
@@ -149,6 +156,31 @@ function handle(ev) {
   if (ev.type === "plan") render(ev.plan);
 }
 
+// Taste-overlap diagram. Circle distance reflects the Qloo affinity tier, not a measured percentage.
+function tier(r) {
+  const a = r.affinity;
+  if (typeof a === "number") return a >= 0.95 ? ["Very strong match", 44] : a >= 0.92 ? ["Strong match", 58] : ["Good match", 72];
+  return r.confidence === "high" ? ["Very strong match", 44] : r.confidence === "medium" ? ["Strong match", 58] : ["Good match", 72];
+}
+function vennSvg(r) {
+  const [label, d] = tier(r);
+  const left = 110 - d / 2, right = 110 + d / 2;
+  return `<svg viewBox="0 0 220 124" role="img" aria-label="${esc(label)} between this room's crowd and ${esc(r.headliner)} fans">
+    <circle cx="${left}" cy="55" r="46" fill="#ff5a36" fill-opacity=".22" stroke="#ff5a36"/>
+    <circle cx="${right}" cy="55" r="46" fill="#5ad19a" fill-opacity=".22" stroke="#5ad19a"/>
+    <text x="${left - 22}" y="52" text-anchor="middle">Your</text>
+    <text x="${left - 22}" y="65" text-anchor="middle">crowd</text>
+    <text x="${right + 22}" y="52" text-anchor="middle">Their</text>
+    <text x="${right + 22}" y="65" text-anchor="middle">fans</text>
+    <text x="110" y="120" text-anchor="middle" class="sub">${esc(label)}</text>
+  </svg>`;
+}
+function chips(r) {
+  const fans = (r.connected_acts || []).slice(0, 3).map((a) => `<span class="chip fan">Fans of ${esc(a)}</span>`);
+  const ev = (r.evidence || []).slice(0, 4).map((e) => `<span class="chip">${esc(e)}</span>`);
+  return fans.length || ev.length ? `<div class="chips">${fans.join("")}${ev.join("")}</div>` : "";
+}
+
 // Hide routing notes that only report that nothing was found.
 const isEmptyNews = (s) => !s || /^(no |none|not found|n\/a)/i.test(s.trim());
 
@@ -164,6 +196,7 @@ function render(plan) {
         <h3>${esc(r.headliner)}<span class="pill ${esc(r.confidence)}">${esc(r.confidence)}</span></h3>
         <div class="meta">${r.opener ? "with " + esc(r.opener) : ""}${r.suggested_date ? " · " + esc(r.suggested_date) : ""}</div>
         ${isEmptyNews(r.routing_note) ? "" : `<div class="route">${esc(r.routing_note)}</div>`}
+        <div class="overlap">${vennSvg(r)}${chips(r)}</div>
         <p>${esc(r.why)}</p>
         ${(r.copromo || []).length ? `<p class="meta">Co-promo: ${r.copromo.map(esc).join(" · ")}</p>` : ""}
         <details><summary>Offer email</summary><pre>${esc(r.offer_email)}</pre></details>
@@ -194,7 +227,8 @@ $("compareBtn").onclick = async () => {
         <div class="col"><h4>Generic AI, no taste data</h4><ol>${lastGeneric.map((g) => item(g.artist, g.why)).join("")}</ol></div>
         <div class="col venn"><h4>Venn, grounded in Qloo</h4><ol>${(lastPlan.recommendations || []).map((r) => item(r.headliner, r.why)).join("")}</ol></div>
       </div>
-            <p class="caption">Same question, same AI model. The generic answer can name plausible bands, but it's a guess. Venn's picks come with receipts: this room's own past acts, Qloo taste overlap with their fans, and who's actually been playing nearby.</p>`;    $("compareBtn").style.display = "none";
+      <p class="caption">Same question, same AI model. The generic answer can name plausible bands, but it's a guess. Venn's picks come with receipts: this room's own past acts, Qloo taste overlap with their fans, and who's actually been playing nearby.</p>`;
+    $("compareBtn").style.display = "none";
   } catch {
     $("compare").innerHTML = `<p class="caption">Couldn't run the comparison right now. Try again in a minute.</p>`;
   }

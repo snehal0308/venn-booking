@@ -44,6 +44,9 @@ Writing rules (the reader is a busy venue booker scanning on a phone):
 - Never mention tool names, field names, "Qloo returned", or raw scores like 0.968.
   Say "very strong taste match" or "rising act" instead.
 - offer_email: under 120 words, friendly and specific, signed "[Your name], Talent Buyer, <venue>".
+- affinity: always fill in the headliner's Qloo affinity score from the candidate list.
+- connected_acts: 1-3 real past acts of this venue (or the booker's list) that you used as seeds.
+- evidence: 2-4 chips, each max 5 words, each backed by a tool result. No raw scores.
 """
 
 MAX_STEPS = 14
@@ -117,6 +120,7 @@ def run(request: str, on_event: Callable[[dict], None] | None = None) -> dict:
             messages.append({"role": "user", "content": tool_results})
 
     raise RuntimeError("Agent did not finish within the step limit")
+
 
 def generic_picks(venue: str, city: str | None = None) -> list[dict]:
     """Baseline for comparison: the same model, same question, but no Qloo or venue data."""

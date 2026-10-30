@@ -199,6 +199,8 @@ SCHEMAS = [
                             "suggested_date": {"type": "string", "description": "A real open date if found, else a timing window like 'their next Midwest run'."},
                             "why": {"type": "string", "description": "Cite concrete evidence: which past acts' fans love them, Qloo affinity, momentum/routing."},
                             "affinity": {"type": "number", "description": "Qloo affinity score for the headliner (0-1)."},
+                            "connected_acts": {**_str_list, "description": "1-3 of this venue's past acts (seeds you used) whose fans love this artist."},
+                            "evidence": {**_str_list, "description": "2-4 short factual chips, max 5 words each, e.g. 'Rising act', 'Played Chicago Jul 2026', 'Not here recently', 'Chicago local'."},
                             "confidence": {"type": "string", "enum": ["high", "medium", "low"]},
                             "routing_note": {"type": "string"},
                             "copromo": _str_list,
