@@ -46,8 +46,7 @@ Writing rules (the reader is a busy venue booker scanning on a phone):
 - offer_email: under 120 words, friendly and specific, signed "[Your name], Talent Buyer, <venue>".
 - affinity: always fill in the headliner's Qloo affinity score from the candidate list.
 - connected_acts: 1-3 real past acts of this venue (or the booker's list) that you used as seeds.
-- evidence: 2-4 chips, each max 5 words, each backed by a tool result. No raw scores.
-"""
+- - Refer to artists by name or "they", never "he" or "she", since many are bands."""
 
 MAX_STEPS = 14
 
