@@ -1,7 +1,7 @@
 {
   "venue": "Mohawk",
   "city": "Austin",
-  "generated": "2026-10-30",
+  "generated": "2026-10-31",
   "steps": [
     "get_venue_profile",
     "get_local_taste",
@@ -15,39 +15,92 @@
     "find_copromo_partners"
   ],
   "plan": {
-    "venue_summary": "Mohawk's calendar mixes art-rock and indie (Geordie Greep, Hovvdy, Kishi Bashi) with punk, noise and industrial nights (Linda Lindas, Show Me the Body, Stabbing Westward). Its downtown Austin crowd buys tickets for guitar-forward, left-of-center acts.",
+    "venue_summary": "Mohawk's crowd splits between indie and lo-fi (Hovvdy, Kishi Bashi, Weatherday) and loud punk, noise and prog (Geordie Greep, Lip Critic, Show Me the Body). It's a downtown Austin room with a wide, adventurous bill.",
     "recommendations": [
       {
-        "headliner": "Dehd",
-        "opener": "Sun June",
-        "affinity": 0.971,
+        "headliner": "Good Looks",
+        "why": "Fans of Brian Fallon and Tim Barry love them, a very strong taste match. They played Austin three times in Apr\u2013May at 29th Street Ballroom but haven't played Mohawk recently. A rising act.",
         "confidence": "medium",
-        "suggested_date": "their next Texas run",
-        "why": "Very strong taste match with fans of Hovvdy, The Linda Lindas and Weatherday. Still an emerging act with room to grow. No recent Austin-area shows or Mohawk date found, so the room is untapped.",
-        "offer_email": "Hi Dehd team,\n\nI book Mohawk in Austin (indoor/outdoor, 100-500 cap). Our crowd already turns out for Hovvdy, The Linda Lindas and Weatherday, and Dehd's garage-pop sound fits that audience well. We haven't seen you in Austin recently and think a Mohawk show would sell well.\n\nWe'd love to offer a headline night on your next Texas run, with Sun June opening. We can share a guarantee/door-split offer and hold dates that fit your routing. What does your fall/spring availability look like?\n\nThanks,\n[Your name], Talent Buyer, Mohawk",
-        "image": "https://images.qloo.com/i/B0983E75-B0AF-41A6-844C-147DECDBC07E-420x-auto.jpg"
-      },
-      {
-        "headliner": "Palehound",
+        "affinity": 0.966,
+        "connected_acts": [
+          "Brian Fallon",
+          "Tim Barry",
+          "Hovvdy"
+        ],
+        "evidence": [
+          "Rising act",
+          "Played Austin Apr\u2013May 2026",
+          "Not at Mohawk recently"
+        ],
         "opener": "Why Bonnie",
-        "affinity": 0.963,
-        "confidence": "medium",
-        "suggested_date": "their next Texas run",
-        "why": "Rising act with a very strong taste match to Mohawk's Hovvdy and Weatherday crowd. No Austin-area shows or Mohawk date found in the last year, so the demand is untapped.",
-        "offer_email": "Hi Palehound team,\n\nI'm the talent buyer at Mohawk in Austin. Fans of Hovvdy, Weatherday and The Linda Lindas fill our room, and Palehound's raw, melodic indie rock is a natural fit for that crowd. We haven't found a recent Austin date for you, so we'd like to change that.\n\nWe'd love to host a headline show on your next Texas run, with Why Bonnie's dreamy set opening. Happy to send a guarantee/split offer and work around your routing. Do you have any windows in mind?\n\nBest,\n[Your name], Talent Buyer, Mohawk",
-        "image": "https://images.qloo.com/i/439CE622-4BD3-49EB-8DE1-8191FA638898-420x-auto.jpg"
+        "copromo": [
+          "Sahara Lounge",
+          "Liar's Club"
+        ],
+        "routing_note": "Played Austin three times Apr\u2013May 2026, none at Mohawk.",
+        "suggested_date": "next Texas run",
+        "offer_email": "Hi there,\n\nI'm booking Mohawk in Austin and have been following Good Looks. Fans of Brian Fallon and Tim Barry, who both played our room this fall, clearly love your music, and your run of Austin shows this spring shows the city is ready for you.\n\nWe'd love to host you for a headline show on your next Texas run. We'd pair you with Why Bonnie, whose audience overlaps with yours. Could you share your availability and terms?\n\nThanks,\n[Your name], Talent Buyer, Mohawk",
+        "image": "https://images.qloo.com/i/ABE41030-E821-46C8-BE8A-B5DD133EE7C8-420x-auto.jpg"
       },
       {
-        "headliner": "Mannequin Pussy",
-        "opener": "Good Looks",
-        "affinity": 0.973,
+        "headliner": "Chris Farren",
+        "why": "Fans of The Linda Lindas and Hovvdy love them, a very strong taste match. A rising act with no recent Mohawk date. Little tour data found nearby, so timing is unconfirmed.",
         "confidence": "low",
-        "suggested_date": "Sun 15 Nov",
-        "routing_note": "Open date Sun 15 Nov between Austin (14 Nov) and Oklahoma City (16 Nov).",
-        "why": "Very strong taste match with Linda Lindas and Show Me the Body fans, and a real open date on their routing. Caveat: they play Austin the night before, and they're a bigger name.",
-        "offer_email": "Hi Mannequin Pussy team,\n\nI book Mohawk in Austin. Fans of The Linda Lindas and Show Me the Body fill our room, and Mannequin Pussy is a great match. We saw you're at Radio East on 14 Nov and in Oklahoma City on 16 Nov, which leaves Sun 15 Nov open.\n\nWe understand the Austin date the night before, so we'd also be glad to talk about a future headline night at Mohawk, with Good Looks opening. Could you share your thoughts and availability?\n\nThanks,\n[Your name], Talent Buyer, Mohawk",
-        "image": "https://images.qloo.com/i/B5A79373-A114-4C89-AC88-ABE785592B71-420x-auto.jpg"
+        "affinity": 0.97,
+        "connected_acts": [
+          "The Linda Lindas",
+          "Hovvdy"
+        ],
+        "evidence": [
+          "Rising act",
+          "Not at Mohawk recently"
+        ],
+        "opener": "Petey",
+        "copromo": [
+          "Logan Arcade",
+          "Buffalo Exchange"
+        ],
+        "suggested_date": "next Texas run",
+        "offer_email": "Hi there,\n\nI book Mohawk in Austin. Chris Farren's power-pop fits our crowd well. The audiences for The Linda Lindas and Hovvdy, who both played here this fall, love your music.\n\nWe'd like to offer a headline show whenever you're next routing through Texas, with Petey as support. We can discuss a guarantee versus door deal that works for you.\n\nWhat does your calendar look like?\n\nBest,\n[Your name], Talent Buyer, Mohawk",
+        "image": "https://images.qloo.com/i/3F787774-61D3-437E-9E6C-E9ED1049EA57-420x-auto.jpg"
+      },
+      {
+        "headliner": "Dehd",
+        "why": "Fans of Weatherday and Hovvdy love them, a very strong taste match. A rising act with plenty of recent touring, but no recent Mohawk date and no Austin show found.",
+        "confidence": "medium",
+        "affinity": 0.968,
+        "connected_acts": [
+          "Weatherday",
+          "Hovvdy"
+        ],
+        "evidence": [
+          "Rising act",
+          "Active touring schedule",
+          "Not at Mohawk recently"
+        ],
+        "opener": "Sun June",
+        "copromo": [
+          "Sahara Lounge",
+          "Far Out Lounge & Stage"
+        ],
+        "suggested_date": "their next Texas run",
+        "offer_email": "Hi there,\n\nI'm the talent buyer at Mohawk in Austin. Dehd's fuzzy garage sound suits our room. Weatherday and Hovvdy both played here this fall and their fans love your music.\n\nWe'd love to offer you a headline night on your next run through Texas. We'd pair you with Sun June, whose audience overlaps with yours. Could you send over your availability and terms?\n\nThanks so much,\n[Your name], Talent Buyer, Mohawk",
+        "image": "https://images.qloo.com/i/B0983E75-B0AF-41A6-844C-147DECDBC07E-420x-auto.jpg"
       }
     ]
-  }
+  },
+  "generic": [
+    {
+      "artist": "Horsegirl",
+      "why": "Their jangly, noisy Chicago indie rock suits Mohawk's room and appeals to Austin's college and indie crowd."
+    },
+    {
+      "artist": "Wishy",
+      "why": "This Indiana shoegaze-pop band is building a fast-growing buzz and would likely draw a sold-out crowd at Mohawk's size."
+    },
+    {
+      "artist": "Water From Your Nails",
+      "why": "Their experimental, danceable indie sound would pull in Austin's adventurous crowd and make for an unusual night."
+    }
+  ]
 }
