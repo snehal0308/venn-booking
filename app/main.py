@@ -3,10 +3,12 @@ from __future__ import annotations
 
 import json
 import queue
+import re
 import threading
+from pathlib import Path
 
-from fastapi import FastAPI
-from fastapi.responses import FileResponse, StreamingResponse
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
@@ -14,6 +16,7 @@ from . import agent
 
 app = FastAPI(title="Venn")
 app.mount("/static", StaticFiles(directory="static"), name="static")
+DEMO_DIR = Path("demo")
 
 
 class BookRequest(BaseModel):
@@ -32,11 +35,18 @@ def health():
     return {"ok": True}
 
 
+@app.get("/api/demo/{slug}")
+def demo(slug: str):
+    """Saved results for the example venues, so judges see a result instantly."""
+    path = DEMO_DIR / f"{slug}.json"
+    if not re.fullmatch(r"[a-z0-9-]+", slug) or not path.exists():
+        raise HTTPException(status_code=404, detail="No saved demo")
+    return JSONResponse(json.loads(path.read_text()))
+
+
 @app.post("/api/book")
 def book(req: BookRequest):
-    prompt = f"Venue: {req.venue}" + (f", {req.city}" if req.city else "")
-    if req.notes:
-        prompt += f"\nBooker's notes: {req.notes}"
+    prompt = agent.build_prompt(req.venue, req.city, req.notes)
 
     q: queue.Queue = queue.Queue()
 

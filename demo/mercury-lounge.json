@@ -1,0 +1,69 @@
+{
+  "venue": "Mercury Lounge",
+  "city": "New York",
+  "generated": "2026-10-30",
+  "steps": [
+    "get_venue_profile",
+    "get_local_taste",
+    "resolve_artists",
+    "find_candidate_artists",
+    "find_candidate_artists",
+    "find_candidate_artists",
+    "find_candidate_artists",
+    "check_regional_momentum",
+    "find_routing_gaps",
+    "find_openers",
+    "find_openers",
+    "find_openers",
+    "find_copromo_partners"
+  ],
+  "plan": {
+    "venue_summary": "Mercury Lounge's crowd buys guitar-driven indie and post-punk, from Art Brut and Interpol to The Royston Club and Jejune. Its Lower Manhattan bookings mix established indie names with rising bands.",
+    "recommendations": [
+      {
+        "headliner": "Bodega",
+        "affinity": 0.939,
+        "confidence": "high",
+        "why": "Fans of The Royston Club, Jejune and Elephant Stone love Bodega, a very strong taste match for this room. They played Rough Trade Below on 15 Oct but haven't played Mercury Lounge recently.",
+        "opener": "Surfbort",
+        "suggested_date": "Early 2027 NYC headline window",
+        "routing_note": "Played Rough Trade Below (NYC) on 15 Oct and Millennium Film Workshop on 9 Oct; not Mercury Lounge.",
+        "copromo": [
+          "Rough Trade",
+          "Bandcamp",
+          "Pitchfork"
+        ],
+        "offer_email": "Subject: Bodega at Mercury Lounge\n\nHi there,\n\nI'm the talent buyer at Mercury Lounge in New York. Bodega keeps coming up as a strong fit for our audience. Fans of The Royston Club and Jejune, who sell well for us, love them. We noticed your recent NYC shows and would love to bring you to our stage for a headline night.\n\nWe'd suggest Surfbort as opener and can offer a guarantee plus door split. We're flexible on dates in early 2027. Could you send over your availability and terms?\n\nThanks,\n[Your name], Talent Buyer, Mercury Lounge",
+        "image": "https://images.qloo.com/i/7F9DD646-44A6-4530-B804-D527EECDF96D-420x-auto.jpg"
+      },
+      {
+        "headliner": "Sunflower Bean",
+        "affinity": 0.952,
+        "confidence": "medium",
+        "why": "Fans of The Royston Club, Jejune and Elephant Stone love Sunflower Bean, a very strong taste match and a rising act. They've played 12 shows recently, none in the NYC area or at this room.",
+        "opener": "Boytoy",
+        "suggested_date": "Next NYC run",
+        "copromo": [
+          "Rough Trade",
+          "Bandcamp"
+        ],
+        "offer_email": "Subject: Sunflower Bean at Mercury Lounge\n\nHi there,\n\nI'm the talent buyer at Mercury Lounge in New York. Our core crowd, fans of The Royston Club, Jejune and Elephant Stone, has a very strong taste overlap with Sunflower Bean, and we haven't hosted you recently. We'd love to offer a headline night with Boytoy opening.\n\nHappy to discuss a guarantee plus bonus and to work around your next NYC routing. Could you share availability and terms?\n\nBest,\n[Your name], Talent Buyer, Mercury Lounge",
+        "image": "https://images.qloo.com/i/CDF1678A-FBA9-4831-A998-B683EB7586CB-420x-auto.jpg"
+      },
+      {
+        "headliner": "Dream Wife",
+        "affinity": 0.935,
+        "confidence": "medium",
+        "why": "Fans of The Royston Club, Jejune and Elephant Stone love Dream Wife, a rising punk act. Seven recent shows were found, none near New York or at this room, so timing is open.",
+        "opener": "The Wants",
+        "suggested_date": "Next US tour",
+        "copromo": [
+          "Rough Trade",
+          "Bandcamp"
+        ],
+        "offer_email": "Subject: Dream Wife at Mercury Lounge\n\nHi there,\n\nI'm the talent buyer at Mercury Lounge in New York. Dream Wife is a strong match for our audience. Fans of The Royston Club and Jejune, who sell well here, love your band. We'd love to host you for a headline night with The Wants opening.\n\nWe can offer a competitive guarantee plus door split and will build around your next US dates. Could you send availability and terms?\n\nThanks,\n[Your name], Talent Buyer, Mercury Lounge",
+        "image": "https://images.qloo.com/i/C0FEDDD3-AAB0-449A-908B-2F4E9CF0A4E4-420x-auto.jpg"
+      }
+    ]
+  }
+}

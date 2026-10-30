@@ -6,6 +6,7 @@ from typing import Callable
 
 import anthropic
 
+from . import qloo
 from .config import ANTHROPIC_API_KEY, LLM_MODEL
 from .tools import REGISTRY, SCHEMAS
 
@@ -37,7 +38,8 @@ Ranking rules:
 Writing rules (the reader is a busy venue booker scanning on a phone):
 - venue_summary: max 2 sentences.
 - why: max 40 words. Lead with the strongest fact. Name 1-2 past acts whose fans love this artist.
-- routing_note: max 20 words, or omit it.
+- routing_note: max 20 words. Only include it when there is positive news (a real open date or a
+  recent nearby show). If nothing was found, leave routing_note out entirely.
 - suggested_date: a short date or window, e.g. "Fri 20 Nov" or "next Midwest run".
 - Never mention tool names, field names, "Qloo returned", or raw scores like 0.968.
   Say "very strong taste match" or "rising act" instead.
@@ -45,6 +47,25 @@ Writing rules (the reader is a busy venue booker scanning on a phone):
 """
 
 MAX_STEPS = 14
+
+
+def build_prompt(venue: str, city: str | None = None, notes: str | None = None) -> str:
+    prompt = f"Venue: {venue}" + (f", {city}" if city else "")
+    if notes:
+        prompt += f"\nBooker's notes: {notes}"
+    return prompt
+
+
+def _attach_images(plan: dict) -> dict:
+    """Add Qloo artist photos to each recommendation (cached lookups, best effort)."""
+    for rec in plan.get("recommendations", []):
+        try:
+            hit = qloo.resolve(rec.get("headliner", ""))
+            if hit and hit.get("image"):
+                rec["image"] = hit["image"]
+        except Exception:
+            pass
+    return plan
 
 
 def run(request: str, on_event: Callable[[dict], None] | None = None) -> dict:
@@ -68,7 +89,7 @@ def run(request: str, on_event: Callable[[dict], None] | None = None) -> dict:
                 continue
             if block.name == "submit_booking_plan":
                 emit({"type": "done"})
-                return block.input
+                return _attach_images(block.input)
             emit({"type": "tool", "name": block.name, "input": block.input})
             try:
                 result = REGISTRY[block.name](**block.input)

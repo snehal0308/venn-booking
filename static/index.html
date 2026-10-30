@@ -9,7 +9,7 @@
   :root { --bg:#0e0d12; --panel:#17151d; --ink:#f3efe6; --muted:#9a94a6; --accent:#ff5a36; --ok:#5ad19a; --line:#2a2633; }
   * { box-sizing:border-box; }
   body { margin:0; background:var(--bg); color:var(--ink); font-family:Inter,system-ui,sans-serif; }
-  main { max-width:960px; margin:0 auto; padding:40px 16px 80px; }
+  main { max-width:960px; margin:0 auto; padding:40px 16px 40px; }
   h1 { font-family:"Space Grotesk"; font-size:clamp(32px,6vw,56px); line-height:1; margin:0 0 8px; letter-spacing:-.02em; }
   h1 span { color:var(--accent); }
   .tag { color:var(--muted); margin:0 0 32px; font-size:18px; }
@@ -20,18 +20,25 @@
   button:disabled { opacity:.5; cursor:wait; }
   .examples { margin:12px 0 0; color:var(--muted); font-size:14px; }
   .examples a { color:var(--ink); cursor:pointer; text-decoration:underline dotted; margin-right:12px; }
+  .banner { display:none; margin:20px 0 0; padding:12px 16px; border:1px solid var(--line); border-radius:10px; color:var(--muted); font-size:14px; align-items:center; gap:12px; flex-wrap:wrap; }
+  .banner button { padding:8px 14px; font-size:14px; }
   #log { margin:24px 0; font:13px ui-monospace,monospace; color:var(--muted); }
   #log div::before { content:"→ "; color:var(--accent); }
   .summary { font-size:18px; line-height:1.5; border-left:3px solid var(--accent); padding-left:16px; margin:24px 0; }
-  .card { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:20px; margin:16px 0; }
+  .card { display:grid; grid-template-columns:88px 1fr; gap:20px; background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:20px; margin:16px 0; }
+  .photo { width:88px; height:88px; border-radius:12px; object-fit:cover; background:var(--line); }
+  .photo.blank { display:flex; align-items:center; justify-content:center; font:700 32px "Space Grotesk"; color:var(--muted); }
   .card h3 { font-family:"Space Grotesk"; font-size:24px; margin:0 0 4px; }
   .meta { color:var(--muted); font-size:14px; margin-bottom:12px; }
-  .pill { display:inline-block; padding:2px 10px; border-radius:99px; font-size:12px; font-weight:600; text-transform:uppercase; margin-left:8px; }
+  .pill { display:inline-block; padding:2px 10px; border-radius:99px; font-size:12px; font-weight:600; text-transform:uppercase; margin-left:8px; vertical-align:middle; }
   .high { background:var(--ok); color:#06210f; } .medium { background:#f2c94c; color:#2a1f00; } .low { background:var(--line); color:var(--muted); }
   .route { color:var(--ok); font-size:14px; margin:8px 0; }
+  .card p { margin:8px 0; line-height:1.5; }
   details { margin-top:12px; } summary { cursor:pointer; color:var(--accent); }
   pre { white-space:pre-wrap; background:#0e0d12; padding:12px; border-radius:10px; font:14px/1.5 Inter,sans-serif; }
-  @media (max-width:600px){ form{grid-template-columns:1fr;} }
+  footer { max-width:960px; margin:0 auto; padding:24px 16px 48px; color:var(--muted); font-size:13px; border-top:1px solid var(--line); }
+  footer a { color:var(--muted); }
+  @media (max-width:600px){ form{grid-template-columns:1fr;} .card{grid-template-columns:1fr;} .photo{width:64px;height:64px;} }
 </style>
 </head>
 <body>
@@ -40,20 +47,29 @@
   <p class="tag">Find the overlap between your crowd and the next band they'll love.</p>
 
   <form id="f">
-    <input id="venue" placeholder="Venue name (e.g. The Empty Bottle)" required />
+    <input id="venue" placeholder="Venue name (e.g. Empty Bottle)" required />
     <input id="city" placeholder="City" />
     <textarea id="notes" rows="2" placeholder="Optional: constraints (e.g. need a Thursday in March, max guarantee $1,500)"></textarea>
     <button id="go">Book my next great night</button>
   </form>
-  <p class="examples">Try:
-    <a data-v="The Empty Bottle" data-c="Chicago">Empty Bottle, Chicago</a>
-    <a data-v="Mercury Lounge" data-c="New York">Mercury Lounge, NYC</a>
-    <a data-v="Mohawk" data-c="Austin">Mohawk, Austin</a>
+  <p class="examples">Instant examples:
+    <a data-slug="empty-bottle" data-v="Empty Bottle" data-c="Chicago">Empty Bottle, Chicago</a>
+    <a data-slug="mercury-lounge" data-v="Mercury Lounge" data-c="New York">Mercury Lounge, NYC</a>
+    <a data-slug="mohawk" data-v="Mohawk" data-c="Austin">Mohawk, Austin</a>
   </p>
 
+  <div class="banner" id="banner">
+    <span id="bannerText"></span>
+    <button id="runLive" type="button">Run it live (1–2 min)</button>
+  </div>
   <div id="log"></div>
   <div id="out"></div>
 </main>
+<footer>
+  Taste data from <a href="https://www.qloo.com" target="_blank" rel="noopener">Qloo</a> ·
+  venue history and recent shows from <a href="https://www.setlist.fm" target="_blank" rel="noopener">setlist.fm</a> ·
+  tour dates from Ticketmaster. Venn suggests; the booker decides.
+</footer>
 <script>
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -67,44 +83,72 @@ const LABELS = {
   find_openers: "Pairing openers with overlapping fans",
   find_copromo_partners: "Finding local co-promo partners",
 };
+const logStep = (name) => $("log").insertAdjacentHTML("beforeend", `<div>${esc(LABELS[name] || name)}</div>`);
+const clear = () => { $("log").innerHTML = ""; $("out").innerHTML = ""; };
 
-document.querySelectorAll(".examples a").forEach((a) => a.onclick = () => {
-  $("venue").value = a.dataset.v; $("city").value = a.dataset.c;
+document.querySelectorAll(".examples a").forEach((a) => a.onclick = async () => {
+  $("venue").value = a.dataset.v; $("city").value = a.dataset.c; clear();
+  try {
+    const res = await fetch(`/api/demo/${a.dataset.slug}`);
+    if (!res.ok) throw new Error("no demo");
+    const d = await res.json();
+    [...new Set(d.steps || [])].forEach(logStep);
+    render(d.plan);
+    $("bannerText").textContent = `Saved result for ${d.venue}, generated ${d.generated}.`;
+    $("banner").style.display = "flex";
+  } catch {
+    $("banner").style.display = "none";
+  }
 });
+
+$("runLive").onclick = () => $("f").requestSubmit();
 
 $("f").onsubmit = async (e) => {
   e.preventDefault();
-  $("go").disabled = true; $("log").innerHTML = ""; $("out").innerHTML = "";
-  const res = await fetch("/api/book", {
-    method: "POST", headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ venue: $("venue").value, city: $("city").value, notes: $("notes").value }),
-  });
-  const reader = res.body.getReader(); const dec = new TextDecoder(); let buf = "";
-  while (true) {
-    const { value, done } = await reader.read(); if (done) break;
-    buf += dec.decode(value, { stream: true });
-    const parts = buf.split("\n\n"); buf = parts.pop();
-    for (const p of parts) if (p.startsWith("data: ")) handle(JSON.parse(p.slice(6)));
+  $("go").disabled = true; $("runLive").disabled = true; $("banner").style.display = "none"; clear();
+  try {
+    const res = await fetch("/api/book", {
+      method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ venue: $("venue").value, city: $("city").value, notes: $("notes").value }),
+    });
+    const reader = res.body.getReader(); const dec = new TextDecoder(); let buf = "";
+    while (true) {
+      const { value, done } = await reader.read(); if (done) break;
+      buf += dec.decode(value, { stream: true });
+      const parts = buf.split("\n\n"); buf = parts.pop();
+      for (const p of parts) if (p.startsWith("data: ")) handle(JSON.parse(p.slice(6)));
+    }
+  } catch (err) {
+    $("out").innerHTML = `<p class="summary">Couldn't reach Venn. Please try again in a minute.</p>`;
   }
-  $("go").disabled = false;
+  $("go").disabled = false; $("runLive").disabled = false;
 };
 
 function handle(ev) {
-  if (ev.type === "tool") $("log").insertAdjacentHTML("beforeend", `<div>${esc(LABELS[ev.name] || ev.name)}</div>`);
+  if (ev.type === "tool") logStep(ev.name);
   if (ev.type === "error") $("out").innerHTML = `<p class="summary">Something went wrong: ${esc(ev.message)}</p>`;
   if (ev.type === "plan") render(ev.plan);
 }
 
+// Hide routing notes that only report that nothing was found.
+const isEmptyNews = (s) => !s || /^(no |none|not found|n\/a)/i.test(s.trim());
+
 function render(plan) {
   let html = `<p class="summary">${esc(plan.venue_summary)}</p>`;
   for (const r of plan.recommendations || []) {
+    const photo = r.image
+      ? `<img class="photo" src="${esc(r.image)}" alt="${esc(r.headliner)}" loading="lazy" onerror="this.style.visibility='hidden'">`
+      : `<div class="photo blank">${esc((r.headliner || "?")[0])}</div>`;
     html += `<div class="card">
-      <h3>${esc(r.headliner)}<span class="pill ${esc(r.confidence)}">${esc(r.confidence)}</span></h3>
-      <div class="meta">${r.opener ? "with " + esc(r.opener) : ""}${r.suggested_date ? " · " + esc(r.suggested_date) : ""}</div>
-      ${r.routing_note ? `<div class="route">${esc(r.routing_note)}</div>` : ""}
-      <p>${esc(r.why)}</p>
-      ${(r.copromo || []).length ? `<p class="meta">Co-promo: ${r.copromo.map(esc).join(" · ")}</p>` : ""}
-      <details><summary>Offer email</summary><pre>${esc(r.offer_email)}</pre></details>
+      ${photo}
+      <div>
+        <h3>${esc(r.headliner)}<span class="pill ${esc(r.confidence)}">${esc(r.confidence)}</span></h3>
+        <div class="meta">${r.opener ? "with " + esc(r.opener) : ""}${r.suggested_date ? " · " + esc(r.suggested_date) : ""}</div>
+        ${isEmptyNews(r.routing_note) ? "" : `<div class="route">${esc(r.routing_note)}</div>`}
+        <p>${esc(r.why)}</p>
+        ${(r.copromo || []).length ? `<p class="meta">Co-promo: ${r.copromo.map(esc).join(" · ")}</p>` : ""}
+        <details><summary>Offer email</summary><pre>${esc(r.offer_email)}</pre></details>
+      </div>
     </div>`;
   }
   $("out").innerHTML = html;

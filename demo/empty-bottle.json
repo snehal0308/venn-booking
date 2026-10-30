@@ -1,0 +1,69 @@
+{
+  "venue": "Empty Bottle",
+  "city": "Chicago",
+  "generated": "2026-10-30",
+  "steps": [
+    "get_venue_profile",
+    "get_local_taste",
+    "resolve_artists",
+    "find_candidate_artists",
+    "check_regional_momentum",
+    "find_routing_gaps",
+    "find_openers",
+    "find_openers",
+    "find_openers",
+    "find_copromo_partners"
+  ],
+  "plan": {
+    "venue_summary": "Empty Bottle is a Chicago room for guitar-driven indie, post-punk and noise, with experimental and heavy acts mixed in (Post Animal, Horse Lords, Chat Pile, Soul Glo). Its crowd rewards rising local-leaning acts over big names.",
+    "recommendations": [
+      {
+        "headliner": "Horsegirl",
+        "affinity": 0.967,
+        "opener": "Lifeguard",
+        "suggested_date": "next Midwest run",
+        "why": "Rising act with a very strong taste match: fans of Post Animal and Horse Jumper of Love love them. Played Chicago in September (Bohemian National Cemetery) but hasn't played the Bottle recently.",
+        "confidence": "high",
+        "routing_note": "Played Chicago at Bohemian National Cemetery on 25 Sep 2026; no recent Empty Bottle date.",
+        "copromo": [
+          "Logan Arcade",
+          "Reed's Local",
+          "Dante's Pizzeria"
+        ],
+        "offer_email": "Hi Horsegirl team,\n\nWe'd love to host Horsegirl at Empty Bottle in Chicago on your next Midwest run. Our crowd turns out for Post Animal, Horse Jumper of Love and Horse Lords, and fans of those acts rate Horsegirl very highly. We saw the September Chicago show and think a club night here is the natural next step.\n\nWe'd propose a door deal with a guarantee, and Chicago dream-pop band Lifeguard as support. Tell us which dates you're routing through and we'll hold one.\n\nBest,\n[Your name], Talent Buyer, Empty Bottle",
+        "image": "https://images.qloo.com/i/D634CB08-AEF3-4461-ACA0-DE11963D06C7-420x-auto.jpg"
+      },
+      {
+        "headliner": "Dehd",
+        "affinity": 0.973,
+        "opener": "Deeper",
+        "suggested_date": "next Chicago run",
+        "why": "Very strong taste match with fans of Broncho and The Tubs. Plays Chicago often (July shows, Thalia Hall in December) but not the Bottle recently. Deeper, a Bottle favorite, makes a natural opener.",
+        "confidence": "medium",
+        "routing_note": "Played Chicago in July 2026 and Thalia Hall on 30\u201331 Dec 2025; none at Empty Bottle.",
+        "copromo": [
+          "Logan Arcade",
+          "Reed's Local",
+          "Dante's Pizzeria"
+        ],
+        "offer_email": "Hi Dehd team,\n\nEmpty Bottle would love to have Dehd back in a Chicago club setting. Our regulars buy tickets for Broncho, The Tubs and Post Animal, and fans of those bands are big Dehd fans. You've been busy in town, including Thalia Hall in December, so we're thinking of an intimate, sweaty club night or a low-key warm-up show.\n\nWe'd pair you with Deeper, who sold well for us last November. Happy to talk guarantee and dates around your next Chicago stop.\n\nBest,\n[Your name], Talent Buyer, Empty Bottle",
+        "image": "https://images.qloo.com/i/B0983E75-B0AF-41A6-844C-147DECDBC07E-420x-auto.jpg"
+      },
+      {
+        "headliner": "FACS",
+        "affinity": 0.969,
+        "opener": "Ganser",
+        "suggested_date": "early next year, to be confirmed",
+        "why": "Rising act with a very strong taste match: fans of Horse Lords and Chat Pile love them. Active touring schedule (12 recent shows), and no recent Bottle date. Ganser is a Chicago post-punk opener.",
+        "confidence": "medium",
+        "copromo": [
+          "Logan Arcade",
+          "Reed's Local",
+          "Dante's Pizzeria"
+        ],
+        "offer_email": "Hi FACS team,\n\nWe'd like to book FACS at Empty Bottle in Chicago. Fans of Horse Lords, Chat Pile and Pretty Girls Make Graves, who all sell well here, are a close match for your audience. You've been touring plenty and we'd love to make this room a stop.\n\nWe'd suggest Chicago post-punk band Ganser to open, a door deal with a guarantee, and a date that fits your routing. Send over your open dates and we'll lock one in.\n\nBest,\n[Your name], Talent Buyer, Empty Bottle",
+        "image": "https://images.qloo.com/i/2D85A3CA-B9A3-4302-9D44-507E057561A8-420x-auto.jpg"
+      }
+    ]
+  }
+}

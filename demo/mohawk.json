@@ -1,0 +1,55 @@
+{
+  "venue": "Mohawk",
+  "city": "Austin",
+  "generated": "2026-10-30",
+  "steps": [
+    "get_venue_profile",
+    "get_local_taste",
+    "resolve_artists",
+    "find_candidate_artists",
+    "check_regional_momentum",
+    "find_routing_gaps",
+    "find_openers",
+    "find_openers",
+    "find_openers"
+  ],
+  "plan": {
+    "venue_summary": "Mohawk's crowd runs from art-rock and indie (Geordie Greep, Hovvdy, Kishi Bashi) to punk and noise (The Linda Lindas, Show Me the Body, Lip Critic). It's a downtown Austin room that mixes rising indie and DIY acts with heavier touring bills.",
+    "recommendations": [
+      {
+        "headliner": "Dehd",
+        "why": "Very strong taste match with fans of The Linda Lindas and Hovvdy. A rising act that hasn't played Mohawk recently. I found no recent Austin-area shows, so the date is open and unconfirmed.",
+        "confidence": "medium",
+        "opener": "Sun June",
+        "suggested_date": "next Texas run",
+        "affinity": 0.97,
+        "copromo": [],
+        "offer_email": "Hi Dehd team,\n\nI book Mohawk in Austin (cap. ~250 indoor/outdoor mix). Our crowd turns out for acts like The Linda Lindas and Hovvdy, and Dehd's sound is a natural fit. We haven't hosted you recently and think Austin is ready for a headline night.\n\nWe'd love to offer a headline slot on your next Texas run, with Austin's Sun June as support. We can share a guarantee/door-split structure, hospitality and local promo support.\n\nWhat dates are you routing through Texas? Happy to work around your holds.\n\nBest,\n[Your name], Talent Buyer, Mohawk",
+        "image": "https://images.qloo.com/i/B0983E75-B0AF-41A6-844C-147DECDBC07E-420x-auto.jpg"
+      },
+      {
+        "headliner": "sasami",
+        "why": "Very strong taste match with fans of Geordie Greep and Kishi Bashi, a rising art-pop act. Touring heavily (20 recent shows found) but none near Austin and none at Mohawk.",
+        "confidence": "medium",
+        "opener": "Mamalarky",
+        "suggested_date": "next Texas run",
+        "affinity": 0.964,
+        "copromo": [],
+        "offer_email": "Hi sasami team,\n\nI'm the talent buyer at Mohawk in Austin. Our regulars love adventurous, genre-bending artists like Geordie Greep and Kishi Bashi, and sasami fits that crowd well. You've been on the road a lot, but I didn't see recent Austin dates.\n\nWe'd like to offer a headline show with Mamalarky as support, with a fair guarantee, hospitality and strong local promotion.\n\nCould you share your upcoming routing or any open Texas dates?\n\nThanks,\n[Your name], Talent Buyer, Mohawk",
+        "image": "https://images.qloo.com/i/77F578B6-F91E-4D61-BB07-2633B92291AA-420x-auto.jpg"
+      },
+      {
+        "headliner": "Mannequin Pussy",
+        "why": "Strong taste match with fans of The Linda Lindas and Show Me the Body. Not an emerging act, and it's the only gap found: they play Radio East in Austin the night before.",
+        "confidence": "low",
+        "opener": "Being Dead",
+        "suggested_date": "Sun 15 Nov",
+        "affinity": 0.976,
+        "routing_note": "Open date Sun 15 Nov between Radio East, Austin (14 Nov) and Oklahoma City (16 Nov).",
+        "copromo": [],
+        "offer_email": "Hi Mannequin Pussy team,\n\nI book Mohawk in Austin. Fans of The Linda Lindas and Show Me the Body fill our room, and your sound fits that crowd well. I see you're at Radio East on 14 Nov and in Oklahoma City on 16 Nov, leaving 15 Nov open.\n\nI know a second Austin show back-to-back is a big ask. If it's useful, we could instead hold a date on your next run, with Austin's Being Dead opening.\n\nWould either option work?\n\nBest,\n[Your name], Talent Buyer, Mohawk",
+        "image": "https://images.qloo.com/i/B5A79373-A114-4C89-AC88-ABE785592B71-420x-auto.jpg"
+      }
+    ]
+  }
+}
