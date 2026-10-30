@@ -10,16 +10,26 @@
   * { box-sizing:border-box; }
   body { margin:0; background:var(--bg); color:var(--ink); font-family:Inter,system-ui,sans-serif; }
   main { max-width:960px; margin:0 auto; padding:40px 16px 40px; }
-  h1 { font-family:"Space Grotesk"; font-size:clamp(32px,6vw,56px); line-height:1; margin:0 0 8px; letter-spacing:-.02em; }
-  h1 span { color:var(--accent); }
-  .tag { color:var(--muted); margin:0 0 32px; font-size:18px; }
+  .poster { border-bottom:2px solid var(--ink); padding:0 0 18px; margin:0 0 28px; display:flex; align-items:flex-end; gap:18px; flex-wrap:wrap; }
+  .poster .mark { width:64px; height:46px; flex:none; }
+  .poster h1 { font:700 clamp(56px,11vw,112px)/.85 "Space Grotesk"; letter-spacing:-.05em; margin:0; }
+  .poster .bill { margin-left:auto; text-align:right; font:500 13px ui-monospace,Menlo,monospace; color:var(--muted); line-height:1.6; text-transform:uppercase; }
+  .lede { font-size:20px; line-height:1.5; margin:0 0 28px; max-width:640px; }
+  .lede em { font-style:normal; color:var(--accent); }
+  .setlist { margin:28px 0 0; font:15px ui-monospace,Menlo,monospace; }
+  .setlist p { margin:0 0 10px; color:var(--muted); font-size:12px; letter-spacing:.14em; text-transform:uppercase; }
+  .setlist a { display:flex; gap:14px; align-items:baseline; padding:10px 0; border-top:1px dashed var(--line); color:var(--ink); text-decoration:none; cursor:pointer; }
+  .setlist a:last-child { border-bottom:1px dashed var(--line); }
+  .setlist a:hover { color:var(--accent); }
+  .setlist a i { font-style:normal; color:var(--muted); width:22px; }
+  .setlist a b { font-weight:600; }
+  .setlist a span { color:var(--muted); margin-left:auto; font-size:13px; }
+  .poster h1 span { color:var(--accent); }
   form { display:grid; grid-template-columns:2fr 1fr; gap:12px; background:var(--panel); padding:20px; border-radius:14px; border:1px solid var(--line); }
   form textarea, form button { grid-column:1/-1; }
   input, textarea { background:#0e0d12; color:var(--ink); border:1px solid var(--line); border-radius:10px; padding:12px; font:inherit; }
   button { background:var(--accent); color:#120c0a; border:0; border-radius:10px; padding:14px; font:600 16px "Space Grotesk"; cursor:pointer; }
   button:disabled { opacity:.5; cursor:wait; }
-  .examples { margin:12px 0 0; color:var(--muted); font-size:14px; }
-  .examples a { color:var(--ink); cursor:pointer; text-decoration:underline dotted; margin-right:12px; }
   .banner { display:none; margin:20px 0 0; padding:12px 16px; border:1px solid var(--line); border-radius:10px; color:var(--muted); font-size:14px; align-items:center; gap:12px; flex-wrap:wrap; }
   .banner button { padding:8px 14px; font-size:14px; }
   #log { margin:24px 0; font:13px ui-monospace,monospace; color:var(--muted); }
@@ -58,13 +68,17 @@
   .caption { color:var(--muted); font-size:14px; margin:0 0 24px; }
   footer { max-width:960px; margin:0 auto; padding:24px 16px 48px; color:var(--muted); font-size:13px; border-top:1px solid var(--line); }
   footer a { color:var(--muted); }
-  @media (max-width:600px){ form{grid-template-columns:1fr;} .card{grid-template-columns:1fr;} .compare{grid-template-columns:1fr;} .photo{width:64px;height:64px;} }
+  @media (max-width:600px){ .poster .bill{margin-left:0;text-align:left;} .setlist a span{display:none;} form{grid-template-columns:1fr;} .card{grid-template-columns:1fr;} .compare{grid-template-columns:1fr;} .photo{width:64px;height:64px;} }
 </style>
 </head>
 <body>
 <main>
-  <h1>Ven<span>n</span></h1>
-  <p class="tag">Find the overlap between your crowd and the next band they'll love.</p>
+  <div class="poster">
+    <svg class="mark" viewBox="0 0 220 160" aria-hidden="true"><circle cx="80" cy="80" r="70" fill="#ff5a36"/><circle cx="140" cy="80" r="70" fill="none" stroke="#f3efe6" stroke-width="12"/></svg>
+    <h1>Ven<span>n</span></h1>
+    <div class="bill">Booking notes for<br>independent rooms<br>100–500 cap</div>
+  </div>
+  <p class="lede">Tell it your room. It reads your past shows, finds the bands <em>your crowd's fans already love</em>, checks who's been playing nearby, and writes the offer. Every pick comes with the reason why.</p>
 
   <form id="f">
     <input id="venue" placeholder="Venue name (e.g. Empty Bottle)" required />
@@ -74,11 +88,12 @@
     <textarea id="notes" rows="2" placeholder="Optional: constraints (e.g. need a Thursday in March, max guarantee $1,500)"></textarea>
     <button id="go">Book my next great night</button>
   </form>
-  <p class="examples">Instant examples:
-    <a data-slug="empty-bottle" data-v="Empty Bottle" data-c="Chicago">Empty Bottle, Chicago</a>
-    <a data-slug="mercury-lounge" data-v="Mercury Lounge" data-c="New York">Mercury Lounge, NYC</a>
-    <a data-slug="mohawk" data-v="Mohawk" data-c="Austin">Mohawk, Austin</a>
-  </p>
+  <div class="setlist">
+    <p>Or pick tonight's room</p>
+    <a data-slug="empty-bottle" data-v="Empty Bottle" data-c="Chicago"><i>01</i><b>Empty Bottle</b> Chicago<span>indie · garage · noise</span></a>
+    <a data-slug="mercury-lounge" data-v="Mercury Lounge" data-c="New York"><i>02</i><b>Mercury Lounge</b> New York<span>indie rock · post-punk</span></a>
+    <a data-slug="mohawk" data-v="Mohawk" data-c="Austin"><i>03</i><b>Mohawk</b> Austin<span>indie · punk · psych</span></a>
+  </div>
 
   <div class="banner" id="banner">
     <span id="bannerText"></span>
@@ -114,7 +129,7 @@ const clear = () => {
   $("compareBtn").style.display = "none"; lastPlan = null; lastGeneric = null;
 };
 
-document.querySelectorAll(".examples a").forEach((a) => a.onclick = async () => {
+document.querySelectorAll(".setlist a").forEach((a) => a.onclick = async () => {
   $("venue").value = a.dataset.v; $("city").value = a.dataset.c; $("artists").value = ""; clear();
   try {
     const res = await fetch(`/api/demo/${a.dataset.slug}`);
