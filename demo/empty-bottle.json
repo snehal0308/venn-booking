@@ -15,54 +15,51 @@
     "find_copromo_partners"
   ],
   "plan": {
-    "venue_summary": "Empty Bottle is a Chicago room for guitar-driven indie, post-punk and noise, with experimental and heavy acts mixed in (Post Animal, Horse Lords, Chat Pile, Soul Glo). Its crowd rewards rising local-leaning acts over big names.",
+    "venue_summary": "Empty Bottle's crowd buys tickets for Chicago-bred indie, garage and noise bands like Post Animal, Broncho and Horse Jumper of Love, with a heavy underground streak (Chat Pile, Horse Lords). It's a Ukrainian Village room where local scene credibility sells.",
     "recommendations": [
       {
-        "headliner": "Horsegirl",
-        "affinity": 0.967,
-        "opener": "Lifeguard",
-        "suggested_date": "next Midwest run",
-        "why": "Rising act with a very strong taste match: fans of Post Animal and Horse Jumper of Love love them. Played Chicago in September (Bohemian National Cemetery) but hasn't played the Bottle recently.",
-        "confidence": "high",
-        "routing_note": "Played Chicago at Bohemian National Cemetery on 25 Sep 2026; no recent Empty Bottle date.",
-        "copromo": [
-          "Logan Arcade",
-          "Reed's Local",
-          "Dante's Pizzeria"
-        ],
-        "offer_email": "Hi Horsegirl team,\n\nWe'd love to host Horsegirl at Empty Bottle in Chicago on your next Midwest run. Our crowd turns out for Post Animal, Horse Jumper of Love and Horse Lords, and fans of those acts rate Horsegirl very highly. We saw the September Chicago show and think a club night here is the natural next step.\n\nWe'd propose a door deal with a guarantee, and Chicago dream-pop band Lifeguard as support. Tell us which dates you're routing through and we'll hold one.\n\nBest,\n[Your name], Talent Buyer, Empty Bottle",
-        "image": "https://images.qloo.com/i/D634CB08-AEF3-4461-ACA0-DE11963D06C7-420x-auto.jpg"
-      },
-      {
         "headliner": "Dehd",
-        "affinity": 0.973,
+        "affinity": 0.98,
+        "confidence": "high",
+        "why": "Very strong taste match with fans of Post Animal, Broncho and The Tubs. A rising Chicago act that sold out Thalia Hall in December and played Chicago in July, but has no recent Empty Bottle show.",
         "opener": "Deeper",
-        "suggested_date": "next Chicago run",
-        "why": "Very strong taste match with fans of Broncho and The Tubs. Plays Chicago often (July shows, Thalia Hall in December) but not the Bottle recently. Deeper, a Bottle favorite, makes a natural opener.",
-        "confidence": "medium",
-        "routing_note": "Played Chicago in July 2026 and Thalia Hall on 30\u201331 Dec 2025; none at Empty Bottle.",
+        "suggested_date": "Winter, ahead of their next album cycle",
+        "routing_note": "Played Chicago in July 2026 and Thalia Hall in Dec 2025, but not Empty Bottle.",
         "copromo": [
-          "Logan Arcade",
-          "Reed's Local",
-          "Dante's Pizzeria"
+          "Sleeping Village",
+          "Schubas Tavern"
         ],
-        "offer_email": "Hi Dehd team,\n\nEmpty Bottle would love to have Dehd back in a Chicago club setting. Our regulars buy tickets for Broncho, The Tubs and Post Animal, and fans of those bands are big Dehd fans. You've been busy in town, including Thalia Hall in December, so we're thinking of an intimate, sweaty club night or a low-key warm-up show.\n\nWe'd pair you with Deeper, who sold well for us last November. Happy to talk guarantee and dates around your next Chicago stop.\n\nBest,\n[Your name], Talent Buyer, Empty Bottle",
+        "offer_email": "Hi Dehd team,\n\nI'm booking at Empty Bottle in Chicago and would love to bring Dehd back to a room built for your sound. Our regulars turn out for Post Animal, Broncho and The Tubs, and you're a natural fit. You've played Thalia Hall and Lincoln Square recently, but not the Bottle, so we'd like to change that.\n\nWe'd propose a headline night with Deeper opening, on a date that suits your next Chicago stop. We can offer a competitive guarantee, full production and local promotion. Could you send over your availability and rates?\n\nThanks,\n[Your name], Talent Buyer, Empty Bottle",
         "image": "https://images.qloo.com/i/B0983E75-B0AF-41A6-844C-147DECDBC07E-420x-auto.jpg"
       },
       {
-        "headliner": "FACS",
-        "affinity": 0.969,
-        "opener": "Ganser",
-        "suggested_date": "early next year, to be confirmed",
-        "why": "Rising act with a very strong taste match: fans of Horse Lords and Chat Pile love them. Active touring schedule (12 recent shows), and no recent Bottle date. Ganser is a Chicago post-punk opener.",
+        "headliner": "Horsegirl",
+        "affinity": 0.971,
         "confidence": "medium",
+        "why": "Fans of Horse Lords, Chat Pile and Pretty Girls Make Graves love them. A rising Chicago post-punk act with 20 recent shows, one nearby in September, and no recent Empty Bottle date.",
+        "opener": "Lifeguard",
+        "suggested_date": "Their next Chicago run",
+        "routing_note": "Played Chicago on 25 Sep 2026 (Bohemian National Cemetery), not at Empty Bottle.",
+        "copromo": [
+          "Cactus Club",
+          "Electrical Audio"
+        ],
+        "offer_email": "Hi Horsegirl team,\n\nI'm the talent buyer at Empty Bottle. Our crowd shows up for Horse Lords, Chat Pile and Pretty Girls Make Graves, and your noisy, melodic post-punk is a very strong match for them. We saw your September Chicago show and think the Bottle is the right room for a proper club night.\n\nWe'd pair you with Lifeguard, a Chicago dream-rock act whose fans overlap with yours. We can offer a fair guarantee, strong local promotion and a comfortable load-in. Do you have any availability on your next Chicago run?\n\nBest,\n[Your name], Talent Buyer, Empty Bottle",
+        "image": "https://images.qloo.com/i/D634CB08-AEF3-4461-ACA0-DE11963D06C7-420x-auto.jpg"
+      },
+      {
+        "headliner": "Palehound",
+        "affinity": 0.971,
+        "confidence": "low",
+        "why": "Very strong taste match with fans of Horse Jumper of Love, Post Animal and Broncho. A rising act, but no nearby shows or open dates were found, so timing is unconfirmed.",
+        "opener": "Ohmme",
+        "suggested_date": "Their next Midwest run",
         "copromo": [
           "Logan Arcade",
-          "Reed's Local",
-          "Dante's Pizzeria"
+          "Reed's Local"
         ],
-        "offer_email": "Hi FACS team,\n\nWe'd like to book FACS at Empty Bottle in Chicago. Fans of Horse Lords, Chat Pile and Pretty Girls Make Graves, who all sell well here, are a close match for your audience. You've been touring plenty and we'd love to make this room a stop.\n\nWe'd suggest Chicago post-punk band Ganser to open, a door deal with a guarantee, and a date that fits your routing. Send over your open dates and we'll lock one in.\n\nBest,\n[Your name], Talent Buyer, Empty Bottle",
-        "image": "https://images.qloo.com/i/2D85A3CA-B9A3-4302-9D44-507E057561A8-420x-auto.jpg"
+        "offer_email": "Hi Palehound team,\n\nI book Empty Bottle in Chicago. Our audience loves Horse Jumper of Love, Post Animal and Broncho, and the raw guitar songwriting in Palehound fits them well. We'd love to host you on your next Midwest run.\n\nWe'd suggest Ohmme, a Chicago art-rock band, as support. We can offer a solid guarantee, promotion to our local list and a flexible date. Could you share your touring plans and who handles your Midwest bookings?\n\nThanks,\n[Your name], Talent Buyer, Empty Bottle",
+        "image": "https://images.qloo.com/i/439CE622-4BD3-49EB-8DE1-8191FA638898-420x-auto.jpg"
       }
     ]
   }

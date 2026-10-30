@@ -36,9 +36,19 @@
   .card p { margin:8px 0; line-height:1.5; }
   details { margin-top:12px; } summary { cursor:pointer; color:var(--accent); }
   pre { white-space:pre-wrap; background:#0e0d12; padding:12px; border-radius:10px; font:14px/1.5 Inter,sans-serif; }
+  .hint { grid-column:1/-1; color:var(--muted); font-size:13px; margin:-4px 0 0; }
+  #compareBtn { display:none; background:transparent; color:var(--accent); border:1px solid var(--accent); margin:8px 0 0; }
+  .compare { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0; }
+  .col { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:20px; }
+  .col.venn { border-color:var(--accent); }
+  .col h4 { font-family:"Space Grotesk"; font-size:18px; margin:0 0 12px; }
+  .col ol { margin:0; padding-left:20px; } .col li { margin:0 0 12px; line-height:1.45; }
+  .col li b { display:block; }
+  .col li span { color:var(--muted); font-size:14px; }
+  .caption { color:var(--muted); font-size:14px; margin:0 0 24px; }
   footer { max-width:960px; margin:0 auto; padding:24px 16px 48px; color:var(--muted); font-size:13px; border-top:1px solid var(--line); }
   footer a { color:var(--muted); }
-  @media (max-width:600px){ form{grid-template-columns:1fr;} .card{grid-template-columns:1fr;} .photo{width:64px;height:64px;} }
+  @media (max-width:600px){ form{grid-template-columns:1fr;} .card{grid-template-columns:1fr;} .compare{grid-template-columns:1fr;} .photo{width:64px;height:64px;} }
 </style>
 </head>
 <body>
@@ -49,6 +59,8 @@
   <form id="f">
     <input id="venue" placeholder="Venue name (e.g. Empty Bottle)" required />
     <input id="city" placeholder="City" />
+    <textarea id="artists" rows="2" placeholder="Optional: artists who sold well for you (e.g. Dehd, Horsegirl, Post Animal)"></textarea>
+    <p class="hint">Small or new venue? Listing a few of your best-selling artists works even if your shows aren't on setlist.fm.</p>
     <textarea id="notes" rows="2" placeholder="Optional: constraints (e.g. need a Thursday in March, max guarantee $1,500)"></textarea>
     <button id="go">Book my next great night</button>
   </form>
@@ -64,6 +76,8 @@
   </div>
   <div id="log"></div>
   <div id="out"></div>
+  <button id="compareBtn" type="button">Compare with a generic AI (no Qloo)</button>
+  <div id="compare"></div>
 </main>
 <footer>
   Taste data from <a href="https://www.qloo.com" target="_blank" rel="noopener">Qloo</a> ·
@@ -84,15 +98,20 @@ const LABELS = {
   find_copromo_partners: "Finding local co-promo partners",
 };
 const logStep = (name) => $("log").insertAdjacentHTML("beforeend", `<div>${esc(LABELS[name] || name)}</div>`);
-const clear = () => { $("log").innerHTML = ""; $("out").innerHTML = ""; };
+let lastPlan = null, lastGeneric = null;
+const clear = () => {
+  $("log").innerHTML = ""; $("out").innerHTML = ""; $("compare").innerHTML = "";
+  $("compareBtn").style.display = "none"; lastPlan = null; lastGeneric = null;
+};
 
 document.querySelectorAll(".examples a").forEach((a) => a.onclick = async () => {
-  $("venue").value = a.dataset.v; $("city").value = a.dataset.c; clear();
+  $("venue").value = a.dataset.v; $("city").value = a.dataset.c; $("artists").value = ""; clear();
   try {
     const res = await fetch(`/api/demo/${a.dataset.slug}`);
     if (!res.ok) throw new Error("no demo");
     const d = await res.json();
     [...new Set(d.steps || [])].forEach(logStep);
+    lastGeneric = d.generic || null;
     render(d.plan);
     $("bannerText").textContent = `Saved result for ${d.venue}, generated ${d.generated}.`;
     $("banner").style.display = "flex";
@@ -109,7 +128,7 @@ $("f").onsubmit = async (e) => {
   try {
     const res = await fetch("/api/book", {
       method: "POST", headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({ venue: $("venue").value, city: $("city").value, notes: $("notes").value }),
+      body: JSON.stringify({ venue: $("venue").value, city: $("city").value, notes: $("notes").value, artists: $("artists").value }),
     });
     const reader = res.body.getReader(); const dec = new TextDecoder(); let buf = "";
     while (true) {
@@ -152,7 +171,35 @@ function render(plan) {
     </div>`;
   }
   $("out").innerHTML = html;
+  lastPlan = plan;
+  $("compareBtn").style.display = "block";
 }
+
+$("compareBtn").onclick = async () => {
+  if (!lastPlan) return;
+  $("compareBtn").disabled = true;
+  try {
+    if (!lastGeneric) {
+      $("compare").innerHTML = `<p class="caption">Asking a generic AI…</p>`;
+      const res = await fetch("/api/generic", {
+        method: "POST", headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ venue: $("venue").value, city: $("city").value }),
+      });
+      if (!res.ok) throw new Error();
+      lastGeneric = (await res.json()).picks;
+    }
+    const item = (name, why) => `<li><b>${esc(name)}</b><span>${esc(why)}</span></li>`;
+    $("compare").innerHTML = `
+      <div class="compare">
+        <div class="col"><h4>Generic AI, no taste data</h4><ol>${lastGeneric.map((g) => item(g.artist, g.why)).join("")}</ol></div>
+        <div class="col venn"><h4>Venn, grounded in Qloo</h4><ol>${(lastPlan.recommendations || []).map((r) => item(r.headliner, r.why)).join("")}</ol></div>
+      </div>
+            <p class="caption">Same question, same AI model. The generic answer can name plausible bands, but it's a guess. Venn's picks come with receipts: this room's own past acts, Qloo taste overlap with their fans, and who's actually been playing nearby.</p>`;    $("compareBtn").style.display = "none";
+  } catch {
+    $("compare").innerHTML = `<p class="caption">Couldn't run the comparison right now. Try again in a minute.</p>`;
+  }
+  $("compareBtn").disabled = false;
+};
 </script>
 </body>
 </html>

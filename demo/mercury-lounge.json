@@ -10,6 +10,7 @@
     "find_candidate_artists",
     "find_candidate_artists",
     "find_candidate_artists",
+    "find_candidate_artists",
     "check_regional_momentum",
     "find_routing_gaps",
     "find_openers",
@@ -18,50 +19,51 @@
     "find_copromo_partners"
   ],
   "plan": {
-    "venue_summary": "Mercury Lounge's crowd buys guitar-driven indie and post-punk, from Art Brut and Interpol to The Royston Club and Jejune. Its Lower Manhattan bookings mix established indie names with rising bands.",
+    "venue_summary": "Mercury Lounge is a Lower Manhattan room built on guitar-driven indie, post-punk and garage, mixing UK imports (Art Brut, The Royston Club) with NYC bands. Its crowd shows up for rising rock acts at club scale.",
     "recommendations": [
       {
         "headliner": "Bodega",
-        "affinity": 0.939,
+        "why": "Very strong taste match with fans of Art Brut and The Royston Club. A rising art-punk act with 4 recent NYC shows (Rough Trade Below, Oct 15) but none at Mercury Lounge.",
         "confidence": "high",
-        "why": "Fans of The Royston Club, Jejune and Elephant Stone love Bodega, a very strong taste match for this room. They played Rough Trade Below on 15 Oct but haven't played Mercury Lounge recently.",
-        "opener": "Surfbort",
-        "suggested_date": "Early 2027 NYC headline window",
-        "routing_note": "Played Rough Trade Below (NYC) on 15 Oct and Millennium Film Workshop on 9 Oct; not Mercury Lounge.",
+        "affinity": 0.933,
+        "opener": "Public Practice",
+        "suggested_date": "next NYC run",
+        "routing_note": "Played Rough Trade Below on 15 Oct and Millennium Film Workshop on 9 Oct; no Mercury date yet.",
         "copromo": [
           "Rough Trade",
-          "Bandcamp",
-          "Pitchfork"
+          "Turntable Lab",
+          "Bandcamp"
         ],
-        "offer_email": "Subject: Bodega at Mercury Lounge\n\nHi there,\n\nI'm the talent buyer at Mercury Lounge in New York. Bodega keeps coming up as a strong fit for our audience. Fans of The Royston Club and Jejune, who sell well for us, love them. We noticed your recent NYC shows and would love to bring you to our stage for a headline night.\n\nWe'd suggest Surfbort as opener and can offer a guarantee plus door split. We're flexible on dates in early 2027. Could you send over your availability and terms?\n\nThanks,\n[Your name], Talent Buyer, Mercury Lounge",
+        "offer_email": "Hi Bodega team,\n\nWe'd love to host Bodega at Mercury Lounge on your next New York run. Your recent Rough Trade Below show proved the demand, and fans of Art Brut and The Royston Club, two bands our room books often, are a natural fit for your crowd.\n\nWe'd pair you with Public Practice, a rising NYC act with a very similar audience. We can offer a door deal with a guarantee, plus full marketing support and a Rough Trade in-store tie-in.\n\nWhich dates are open in your next routing window?\n\nBest,\n[Your name], Talent Buyer, Mercury Lounge",
         "image": "https://images.qloo.com/i/7F9DD646-44A6-4530-B804-D527EECDF96D-420x-auto.jpg"
       },
       {
-        "headliner": "Sunflower Bean",
-        "affinity": 0.952,
-        "confidence": "medium",
-        "why": "Fans of The Royston Club, Jejune and Elephant Stone love Sunflower Bean, a very strong taste match and a rising act. They've played 12 shows recently, none in the NYC area or at this room.",
-        "opener": "Boytoy",
-        "suggested_date": "Next NYC run",
+        "headliner": "Low Cut Connie",
+        "why": "Very strong taste match with fans of Hollis Brown and The Mekons. A rising live act with 20 recent shows, including White Plains and South Orange, but none at Mercury Lounge.",
+        "confidence": "high",
+        "affinity": 0.941,
+        "opener": "The London Souls",
+        "suggested_date": "Mon 16 or Tue 17 Nov",
+        "routing_note": "Open 16\u201317 Nov between Cleveland Heights (15 Nov) and Boston (18 Nov); played White Plains in August.",
         "copromo": [
           "Rough Trade",
           "Bandcamp"
         ],
-        "offer_email": "Subject: Sunflower Bean at Mercury Lounge\n\nHi there,\n\nI'm the talent buyer at Mercury Lounge in New York. Our core crowd, fans of The Royston Club, Jejune and Elephant Stone, has a very strong taste overlap with Sunflower Bean, and we haven't hosted you recently. We'd love to offer a headline night with Boytoy opening.\n\nHappy to discuss a guarantee plus bonus and to work around your next NYC routing. Could you share availability and terms?\n\nBest,\n[Your name], Talent Buyer, Mercury Lounge",
-        "image": "https://images.qloo.com/i/CDF1678A-FBA9-4831-A998-B683EB7586CB-420x-auto.jpg"
+        "offer_email": "Hi Low Cut Connie team,\n\nWe'd love to have Low Cut Connie at Mercury Lounge. We see you're open 16\u201317 Nov between Cleveland Heights and Boston, and New York sits well on that run. You've played nearby (White Plains, South Orange) but not our room, and our crowd for Hollis Brown and The Mekons overlaps strongly with yours.\n\nWe'd suggest The London Souls, a NYC garage-rock band, as opener. We can offer a guarantee against a door split and full promo support.\n\nCould we hold one of those dates?\n\nBest,\n[Your name], Talent Buyer, Mercury Lounge",
+        "image": "https://images.qloo.com/i/24C07E0C-50DA-4982-AA8E-109C77136CA9-420x-auto.jpg"
       },
       {
         "headliner": "Dream Wife",
-        "affinity": 0.935,
+        "why": "Very strong taste match with fans of Art Brut and The Royston Club, in the UK indie-punk lane Mercury Lounge books often. Rising act with 7 recent shows, but none found near New York.",
         "confidence": "medium",
-        "why": "Fans of The Royston Club, Jejune and Elephant Stone love Dream Wife, a rising punk act. Seven recent shows were found, none near New York or at this room, so timing is open.",
-        "opener": "The Wants",
-        "suggested_date": "Next US tour",
+        "affinity": 0.932,
+        "opener": "Surfbort",
+        "suggested_date": "next US tour",
         "copromo": [
           "Rough Trade",
-          "Bandcamp"
+          "Turntable Lab"
         ],
-        "offer_email": "Subject: Dream Wife at Mercury Lounge\n\nHi there,\n\nI'm the talent buyer at Mercury Lounge in New York. Dream Wife is a strong match for our audience. Fans of The Royston Club and Jejune, who sell well here, love your band. We'd love to host you for a headline night with The Wants opening.\n\nWe can offer a competitive guarantee plus door split and will build around your next US dates. Could you send availability and terms?\n\nThanks,\n[Your name], Talent Buyer, Mercury Lounge",
+        "offer_email": "Hi Dream Wife team,\n\nWe'd love to book Dream Wife at Mercury Lounge on your next US tour. Fans of Art Brut and The Royston Club, both regulars here, are a very strong match for your sound, and we haven't had you in the room yet.\n\nWe'd pair you with Surfbort, a Brooklyn punk band whose audience overlaps closely with yours. We can offer a fair guarantee with a door split, plus local press and record-store promotion.\n\nWhat does your US routing look like?\n\nBest,\n[Your name], Talent Buyer, Mercury Lounge",
         "image": "https://images.qloo.com/i/C0FEDDD3-AAB0-449A-908B-2F4E9CF0A4E4-420x-auto.jpg"
       }
     ]

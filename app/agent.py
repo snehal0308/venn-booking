@@ -49,8 +49,16 @@ Writing rules (the reader is a busy venue booker scanning on a phone):
 MAX_STEPS = 14
 
 
-def build_prompt(venue: str, city: str | None = None, notes: str | None = None) -> str:
+def build_prompt(venue: str, city: str | None = None, notes: str | None = None, artists: str | None = None) -> str:
     prompt = f"Venue: {venue}" + (f", {city}" if city else "")
+    names = [a.strip() for a in (artists or "").replace("\n", ",").split(",") if a.strip()]
+    if names:
+        prompt += (
+            "\nThe booker says these artists sold well at this venue: " + ", ".join(names[:20]) + ".\n"
+            "Treat them as the room's strongest taste signal: resolve them first and use them as the main "
+            "seeds, alongside the venue's setlist.fm history if it exists. If the venue isn't on setlist.fm, "
+            "continue with these artists and the city, and skip the momentum and routing checks."
+        )
     if notes:
         prompt += f"\nBooker's notes: {notes}"
     return prompt
@@ -109,3 +117,27 @@ def run(request: str, on_event: Callable[[dict], None] | None = None) -> dict:
             messages.append({"role": "user", "content": tool_results})
 
     raise RuntimeError("Agent did not finish within the step limit")
+
+def generic_picks(venue: str, city: str | None = None) -> list[dict]:
+    """Baseline for comparison: the same model, same question, but no Qloo or venue data."""
+    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+    where = f"{venue}, {city}" if city else venue
+    resp = client.messages.create(
+        model=LLM_MODEL,
+        max_tokens=1000,
+        messages=[{
+            "role": "user",
+            "content": f"I book shows at {where}, an independent music venue. "
+                       "Recommend 3 artists I should book next, with one short sentence each on why. "
+                       'Reply with only a JSON array like [{"artist": "...", "why": "..."}].',
+        }],
+    )
+    text = "".join(b.text for b in resp.content if b.type == "text")
+    start, end = text.find("["), text.rfind("]")
+    if start == -1 or end == -1:
+        return []
+    try:
+        picks = json.loads(text[start:end + 1])
+    except json.JSONDecodeError:
+        return []
+    return [p for p in picks if isinstance(p, dict) and p.get("artist")][:3]

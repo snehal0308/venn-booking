@@ -33,11 +33,16 @@ def main(slugs):
 
         t0 = time.time()
         plan = agent.run(agent.build_prompt(venue, city), on_event=on_event)
-        result = {"venue": venue, "city": city, "generated": str(date.today()), "steps": steps, "plan": plan}
+        generic = agent.generic_picks(venue, city)
+        result = {
+            "venue": venue, "city": city, "generated": str(date.today()),
+            "steps": steps, "plan": plan, "generic": generic,
+        }
         (out_dir / f"{slug}.json").write_text(json.dumps(result, indent=2))
         print(f"  saved demo/{slug}.json in {time.time() - t0:.0f}s")
         for r in plan.get("recommendations", []):
             print(f"  * {r.get('headliner')} [{r.get('confidence')}] with {r.get('opener')}")
+        print("  generic AI:", ", ".join(g.get("artist", "?") for g in generic))
 
 
 if __name__ == "__main__":

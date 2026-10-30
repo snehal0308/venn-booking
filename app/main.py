@@ -23,6 +23,12 @@ class BookRequest(BaseModel):
     venue: str
     city: str | None = None
     notes: str | None = None  # e.g. "need a Thursday in March", "max guarantee $1,500"
+    artists: str | None = None  # artists that sold well, comma or newline separated
+
+
+class GenericRequest(BaseModel):
+    venue: str
+    city: str | None = None
 
 
 @app.get("/")
@@ -44,9 +50,18 @@ def demo(slug: str):
     return JSONResponse(json.loads(path.read_text()))
 
 
+@app.post("/api/generic")
+def generic(req: GenericRequest):
+    """What a plain AI suggests with no Qloo data, for the side-by-side comparison."""
+    try:
+        return {"picks": agent.generic_picks(req.venue, req.city)}
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=str(exc))
+
+
 @app.post("/api/book")
 def book(req: BookRequest):
-    prompt = agent.build_prompt(req.venue, req.city, req.notes)
+    prompt = agent.build_prompt(req.venue, req.city, req.notes, req.artists)
 
     q: queue.Queue = queue.Queue()
 
