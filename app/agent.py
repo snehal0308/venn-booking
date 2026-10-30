@@ -42,7 +42,7 @@ Writing rules (the reader is a busy venue booker scanning on a phone):
   recent nearby show). If nothing was found, leave routing_note out entirely.
 - suggested_date: a short date or window, e.g. "Fri 20 Nov" or "next Midwest run".
 - Never mention tool names, field names, "Qloo returned", or raw scores like 0.968.
-  Say "very strong taste match" or "rising act" instead.
+  Use plain words like "rising act" instead.
 - offer_email: under 120 words, friendly and specific, signed "[Your name], Talent Buyer, <venue>".
 - affinity: always fill in the headliner's Qloo affinity score from the candidate list.
 - connected_acts: 1-3 real past acts of this venue (or the booker's list) that you used as seeds.

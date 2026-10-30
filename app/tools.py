@@ -206,7 +206,7 @@ SCHEMAS = [
                             "copromo": _str_list,
                             "offer_email": {"type": "string", "description": "Short, professional email to the artist's booking agent."},
                         },
-                        "required": ["headliner", "why", "confidence", "offer_email"],
+                        "required": ["headliner", "why", "confidence", "offer_email", "affinity", "connected_acts", "evidence"],
                     },
                 },
             },
