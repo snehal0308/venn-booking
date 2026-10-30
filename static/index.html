@@ -193,7 +193,7 @@ function render(plan) {
     html += `<div class="card">
       ${photo}
       <div>
-        <h3>${esc(r.headliner)}<span class="pill ${esc(r.confidence)}">${esc(r.confidence)}</span></h3>
+        <h3>${esc(r.headliner)}<span class="pill ${esc(r.confidence)}">${esc(r.confidence)} confidence</span></h3>
         <div class="meta">${r.opener ? "with " + esc(r.opener) : ""}${r.suggested_date ? " · " + esc(r.suggested_date) : ""}</div>
         ${isEmptyNews(r.routing_note) ? "" : `<div class="route">${esc(r.routing_note)}</div>`}
         <div class="overlap">${vennSvg(r)}${chips(r)}</div>
