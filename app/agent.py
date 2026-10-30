@@ -46,6 +46,7 @@ Writing rules (the reader is a busy venue booker scanning on a phone):
 - offer_email: under 120 words, friendly and specific, signed "[Your name], Talent Buyer, <venue>".
 - affinity: always fill in the headliner's Qloo affinity score from the candidate list.
 - connected_acts: 1-3 real past acts of this venue (or the booker's list) that you used as seeds.
+- evidence: 2-4 chips, each max 5 words, each backed by a tool result. No raw scores.
 - Refer to artists by name or "they", never "he" or "she", since many are bands.
 - Describe taste strength only with these tiers from the affinity score: 0.95 or higher = "very strong taste match", 0.92 to 0.95 = "strong taste match", below 0.92 = "good taste match".
 - Don't put the taste-match strength in evidence chips; the diagram already shows it.
