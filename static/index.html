@@ -35,6 +35,9 @@
   .route { color:var(--ok); font-size:14px; margin:8px 0; }
   .card p { margin:8px 0; line-height:1.5; }
   details { margin-top:12px; } summary { cursor:pointer; color:var(--accent); }
+  .actions { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-top:12px; }
+  .actions details { margin:0; flex:1 1 100%; order:2; }
+  .pitchBtn { background:transparent; color:var(--ink); border:1px solid var(--line); padding:8px 14px; font-size:14px; }
   pre { white-space:pre-wrap; background:#0e0d12; padding:12px; border-radius:10px; font:14px/1.5 Inter,sans-serif; }
   .overlap { display:flex; gap:16px; align-items:center; flex-wrap:wrap; margin:12px 0; }
   .overlap svg { width:220px; height:124px; flex:none; }
@@ -137,6 +140,11 @@ $("f").onsubmit = async (e) => {
       method: "POST", headers: {"Content-Type": "application/json"},
       body: JSON.stringify({ venue: $("venue").value, city: $("city").value, notes: $("notes").value, artists: $("artists").value }),
     });
+    if (!res.ok) {
+      let detail = "";
+      try { detail = (await res.json()).detail; } catch {}
+      throw new Error(detail || "Couldn't reach Venn. Please try again in a minute.");
+    }
     const reader = res.body.getReader(); const dec = new TextDecoder(); let buf = "";
     while (true) {
       const { value, done } = await reader.read(); if (done) break;
@@ -145,7 +153,8 @@ $("f").onsubmit = async (e) => {
       for (const p of parts) if (p.startsWith("data: ")) handle(JSON.parse(p.slice(6)));
     }
   } catch (err) {
-    $("out").innerHTML = `<p class="summary">Couldn't reach Venn. Please try again in a minute.</p>`;
+    const msg = err instanceof TypeError ? "Couldn't reach Venn. Please try again in a minute." : err.message;
+    $("out").innerHTML = `<p class="summary">${esc(msg)}</p>`;
   }
   $("go").disabled = false; $("runLive").disabled = false;
 };
@@ -181,12 +190,56 @@ function chips(r) {
   return fans.length || ev.length ? `<div class="chips">${fans.join("")}${ev.join("")}</div>` : "";
 }
 
+// One-page pitch sheet a booker can print or save as PDF and attach to the offer.
+function openPitch(r) {
+  const venue = $("venue").value || "our venue", city = $("city").value;
+  const [match] = tier(r);
+  const acts = (r.connected_acts || []).slice(0, 3);
+  const ev = (r.evidence || []).slice(0, 4);
+  const routing = isEmptyNews(r.routing_note) ? "" : r.routing_note;
+  const section = (title, body) => body ? `<h2>${title}</h2>${body}` : "";
+  const w = window.open("", "_blank");
+  if (!w) { alert("Please allow pop-ups to open the pitch sheet."); return; }
+  w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(r.headliner)} at ${esc(venue)}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body { font-family: Inter, -apple-system, system-ui, sans-serif; color:#1b1a1f; max-width:720px; margin:40px auto; padding:0 24px; line-height:1.5; }
+  .top { display:flex; gap:20px; align-items:center; border-bottom:3px solid #ff5a36; padding-bottom:20px; }
+  .top img { width:96px; height:96px; object-fit:cover; border-radius:12px; }
+  h1 { font-size:30px; margin:0; } .sub { color:#5c5866; margin:4px 0 0; }
+  h2 { font-size:13px; text-transform:uppercase; letter-spacing:.08em; color:#ff5a36; margin:28px 0 8px; }
+  .chip { display:inline-block; border:1px solid #d9d5de; border-radius:99px; padding:3px 10px; margin:0 6px 6px 0; font-size:13px; }
+  .foot { margin-top:40px; padding-top:12px; border-top:1px solid #e5e2e8; color:#8a8494; font-size:12px; }
+  button { margin-top:24px; background:#ff5a36; color:#fff; border:0; border-radius:8px; padding:10px 18px; font-size:15px; cursor:pointer; }
+  @media print { button { display:none; } body { margin:0 auto; } }
+</style></head><body>
+  <div class="top">
+    ${r.image ? `<img src="${esc(r.image)}" alt="">` : ""}
+    <div><h1>${esc(r.headliner)} at ${esc(venue)}</h1>
+    <p class="sub">${esc(city)}${r.opener ? " · with " + esc(r.opener) : ""}${r.suggested_date ? " · " + esc(r.suggested_date) : ""}</p></div>
+  </div>
+  ${section("Why this room", `<p>${esc(r.why)}</p>`)}
+  ${section("Audience overlap", acts.length ? `<p>Fans of acts that recently played ${esc(venue)} show a ${esc(match.toLowerCase())} with ${esc(r.headliner)} in Qloo's taste graph:</p>${acts.map((a) => `<span class="chip">${esc(a)}</span>`).join("")}` : "")}
+  ${section("Momentum", (routing ? `<p>${esc(routing)}</p>` : "") + ev.map((e) => `<span class="chip">${esc(e)}</span>`).join(""))}
+  ${section("Promotion plan", (r.copromo || []).length ? `<p>Local co-promotion with ${r.copromo.map(esc).join(", ")}, whose audiences overlap with this bill.</p>` : "")}
+  ${section("Next step", `<p>Happy to talk dates, a guarantee or door deal, and any radius clauses on the routing.</p>`)}
+  <p class="foot">Prepared with Venn · taste data from Qloo · show history from setlist.fm</p>
+  <button onclick="window.print()">Print or save as PDF</button>
+</body></html>`);
+  w.document.close();
+}
+
+$("out").addEventListener("click", (e) => {
+  const btn = e.target.closest(".pitchBtn");
+  if (btn && lastPlan) openPitch(lastPlan.recommendations[+btn.dataset.i]);
+});
+
 // Hide routing notes that only report that nothing was found.
 const isEmptyNews = (s) => !s || /^(no |none|not found|n\/a)/i.test(s.trim());
 
 function render(plan) {
   let html = `<p class="summary">${esc(plan.venue_summary)}</p>`;
-  for (const r of plan.recommendations || []) {
+  (plan.recommendations || []).forEach((r, i) => {
     const photo = r.image
       ? `<img class="photo" src="${esc(r.image)}" alt="${esc(r.headliner)}" loading="lazy" onerror="this.style.visibility='hidden'">`
       : `<div class="photo blank">${esc((r.headliner || "?")[0])}</div>`;
@@ -199,10 +252,13 @@ function render(plan) {
         <div class="overlap">${vennSvg(r)}${chips(r)}</div>
         <p>${esc(r.why)}</p>
         ${(r.copromo || []).length ? `<p class="meta">Co-promo: ${r.copromo.map(esc).join(" · ")}</p>` : ""}
-        <details><summary>Offer email</summary><pre>${esc(r.offer_email)}</pre></details>
+        <div class="actions">
+          <button type="button" class="pitchBtn" data-i="${i}">Pitch sheet for the agent</button>
+          <details><summary>Offer email</summary><pre>${esc(r.offer_email)}</pre></details>
+        </div>
       </div>
     </div>`;
-  }
+  });
   $("out").innerHTML = html;
   lastPlan = plan;
   $("compareBtn").style.display = "block";
